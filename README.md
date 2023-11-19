@@ -17,6 +17,8 @@ adb reverse tcp:8080 tcp:8080
 
 cd server
 
+npm install
+
 node index.js
 ```
 Commands for starting the React-Native App
