@@ -5,6 +5,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 
@@ -14,14 +15,7 @@ const UserDetails = ({route, navigation}) => {
 
   //   console.log('apiData', apiData);
 
-  useEffect(() => {
-    fetchPosts();
-  }, [itemId]);
-  useFocusEffect(
-    React.useCallback(() => {
-      fetchPosts();
-    }, [itemId]),
-  );
+  
 
   const fetchPosts = async () => {
     // console.log("entered fetch:::::")
@@ -36,41 +30,61 @@ const UserDetails = ({route, navigation}) => {
         return res.json();
       })
       .then(data => {
-        console.log('data', data);
+        // console.log('data::::', data);
         setapiData(data);
       })
       .catch(err => {
         console.error('Error in fetching the data', err);
       });
   };
+  
+  useEffect(() => {
+    fetchPosts();
+  }, [itemId]);
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchPosts();
+    }, [itemId]),
+  );
 
+  // console.log('image paath::::::', `${apiData.image}` );
   return (
     <View style={styles.mainContainer}>
-      <ScrollView>
-        <View style={styles.scroll}>
-          <Text>
-            <Text style={styles.boldText}>Name:</Text> {apiData.name}
-          </Text>
-          <Text>
-            <Text style={styles.boldText}>Email:</Text> {apiData.email}
-          </Text>
-          <Text>
-            <Text style={styles.boldText}>Age:</Text> {apiData.age}
-          </Text>
-          <Text>
-            <Text style={styles.boldText}>Salary:</Text> {apiData.salary}
-          </Text>
-          <Text>
-            <Text style={styles.boldText}>Description:</Text>{' '}
-            {apiData.description}
-          </Text>
-        </View>
-        <TouchableOpacity
-          style={styles.backButton}
-          onPress={() => navigation.navigate('MainPage')}>
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-      </ScrollView>
+      {apiData ? (
+        <ScrollView>
+          <View style={styles.scroll}>
+          {apiData.image && (
+            <Image
+              source={{ uri: apiData.image }}
+              style={styles.img}
+            />
+          )}
+            <Text>
+              <Text style={styles.boldText}>Name:</Text> {apiData.name}
+            </Text>
+            <Text>
+              <Text style={styles.boldText}>Email:</Text> {apiData.email}
+            </Text>
+            <Text>
+              <Text style={styles.boldText}>Age:</Text> {apiData.age}
+            </Text>
+            <Text>
+              <Text style={styles.boldText}>Salary:</Text> {apiData.salary}
+            </Text>
+            <Text>
+              <Text style={styles.boldText}>Description:</Text>
+              {apiData.description}
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.navigate('MainPage')}>
+            <Text style={styles.backButtonText}>Back</Text>
+          </TouchableOpacity>
+        </ScrollView>
+      ) : (
+        <Text>Loading</Text>
+      )}
     </View>
   );
 };
@@ -83,14 +97,18 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 20,
   },
-  scroll:{
-    alignItems:'center',
-    alignContent: 'center'
+  img:{
+    width: 200,
+    height: 200
+  },
+  scroll: {
+    alignItems: 'center',
+    alignContent: 'center',
   },
   backButtonText: {
     color: '#FFFFFF',
     fontWeight: 'bold',
-    paddingLeft: 30
+    paddingLeft: 30,
   },
   backButton: {
     borderRadius: 10,
