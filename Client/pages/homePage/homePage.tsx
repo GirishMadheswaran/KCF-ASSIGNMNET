@@ -1,41 +1,52 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {FlatList, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {styles} from './styles';
-import userList from '../../hooks/userListhooks';
-import { buttonText } from '../../components/button/buttonText';
-import Button from '../../components/button/button';
+import userList from '../../zustand/userListStore';
+import {buttonText} from '../../components/button/buttonText';
+import Button from '../../components/button/Button';
+import {placeHolder} from '../../forms/placeHolder';
 
 interface HomePageProps {
   navigation: any;
 }
 
-function HomePage({navigation}: HomePageProps): JSX.Element {
-  const {filterData, search, searchFilter} = userList();
+export default function HomePage({navigation}: HomePageProps) {
+  const {filterData, search, fetchPosts, searchFilter} = userList();
+
+  React.useEffect(() => {
+    fetchPosts();
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      fetchPosts();
+    }, []),
+  );
+
+  const handleAddUser = () => {
+    navigation.navigate('AddUser');
+  };
+
+  const handleUserDetails = (itemId: any) => {
+    navigation.navigate('UserDetailsRender', {itemId});
+  };
 
   return (
     <View style={styles.mainContainer}>
       <TextInput
-        placeholder="search"
+        placeholder={placeHolder.homePage.searchInput}
         style={styles.inputBox}
         value={search}
-        underlineColorAndroid="transparent"
         onChangeText={text => searchFilter(text)}
       />
-      <Button  
-        title={buttonText.homePage.addUser} 
-        onPress={() => navigation.navigate('AddUser')}
-      />
+      <Button title={buttonText.homePage.addUser} onPress={handleAddUser} />
       <FlatList
         keyExtractor={item => item.id}
         data={filterData}
         renderItem={({item}) => (
           <View style={styles.title}>
-            <TouchableOpacity
-              onPress={() => {
-                console.log('Navigating with itemId:', item.id);
-                navigation.navigate('UserDetailsRender', {itemId: item.id});
-              }}>
+            <TouchableOpacity onPress={() => handleUserDetails(item.id)}>
               <Text>{item.name}</Text>
               <Text>{item.email}</Text>
               <Text>{item.age}</Text>
@@ -46,5 +57,3 @@ function HomePage({navigation}: HomePageProps): JSX.Element {
     </View>
   );
 }
-
-export default HomePage;

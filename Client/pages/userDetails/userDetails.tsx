@@ -1,9 +1,11 @@
-import React, { useLayoutEffect } from 'react';
-import { ScrollView, Text, View, TouchableOpacity, Image } from 'react-native';
+import React, { useEffect } from 'react';
+import { ScrollView, Text, View, Image } from 'react-native';
 import { styles } from './styles';
-import useApiData from '../../hooks/getUserDetailsthooks'; // Import the custom hook
+import GetUserDetailsStore from '../../zustand/getUserDetailsStore';
 import { buttonText } from '../../components/button/buttonText';
-import Button from '../../components/button/button';
+import Button from '../../components/button/Button';
+import { useFocusEffect } from '@react-navigation/native';
+import { formLabels } from '../../forms/formLabels';
 
 interface UserDetailsProps {
   route: {
@@ -14,11 +16,30 @@ interface UserDetailsProps {
   navigation: any;
 }
 
-function UserDetails({ route, navigation }: UserDetailsProps): JSX.Element {
-  const { itemId } = route.params || {};
-  // console.log('itemId:', itemId);
 
-  const { apiData, loading } = useApiData(itemId);
+export default function UserDetails({ route, navigation }: UserDetailsProps) {
+  const { itemId } = route.params || {};
+
+  const { userData, loading, fetchPosts } = GetUserDetailsStore();
+
+
+  useEffect(() => {
+    if (itemId) {
+      fetchPosts(itemId);
+    }
+  }, [itemId, fetchPosts]);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      if (itemId) {
+        fetchPosts(itemId);
+      }
+    }, [itemId, fetchPosts]),
+  );
+
+  const handleHomePage = () => {
+    navigation.navigate('HomePage');
+  };
 
   return (
     <View style={styles.mainContainer}>
@@ -27,35 +48,33 @@ function UserDetails({ route, navigation }: UserDetailsProps): JSX.Element {
       ) : (
         <ScrollView>
           <View style={styles.content}>
-            {apiData.image && (
-              <Image source={{ uri: apiData.image }} style={styles.img} />
+            {userData.image && (
+              <Image source={{ uri: userData.image }} style={styles.img} />
             )}
             <Text>
-              <Text style={styles.boldText}>Name:</Text> {apiData.name}
+              <Text style={styles.boldText}>{formLabels.userDetailsPage.name}:</Text> {userData.name}
             </Text>
             <Text>
-              <Text style={styles.boldText}>Email:</Text> {apiData.email}
+              <Text style={styles.boldText}>{formLabels.userDetailsPage.age}:</Text> {userData.age}
             </Text>
             <Text>
-              <Text style={styles.boldText}>Age:</Text> {apiData.age}
+              <Text style={styles.boldText}>{formLabels.userDetailsPage.email}:</Text> {userData.email}
             </Text>
             <Text>
-              <Text style={styles.boldText}>Salary:</Text> {apiData.salary}
+              <Text style={styles.boldText}>{formLabels.userDetailsPage.salary}:</Text> {userData.salary}
             </Text>
             <Text>
-              <Text style={styles.boldText}>Description:</Text>
-              {apiData.description}
+              <Text style={styles.boldText}>{formLabels.userDetailsPage.description}:</Text>
+              {userData.description}
             </Text>
           </View>
           <Button  
             title={buttonText.detailsPage.back}
-            onPress={() => navigation.navigate('HomePage')}
+            onPress={handleHomePage}
           />
         </ScrollView>
       )}
     </View>
   );
 }
-
-export default UserDetails;
 
