@@ -94,6 +94,12 @@ const useForm = (navigation: any) => {
     navigation.navigate('HomePage');
   };
 
+  const isFormValid = () => {
+    const { name, age, email, salary, description } = values;
+
+    return !!name && !!age && !!email && !!salary && !!description;
+  };
+
   return {
     formValues: values,
     validationErrors,
@@ -101,7 +107,8 @@ const useForm = (navigation: any) => {
     handleSubmit,
     clearValidationError,
     handleFieldChange,
-    handleHomePage
+    handleHomePage,
+    isFormValid
   };
 };
 

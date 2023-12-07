@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { ScrollView, Text, View, Image } from 'react-native';
 import { styles } from './styles';
 import GetUserDetailsStore from '../../zustand/getUserDetailsStore';
-import { buttonText } from '../../components/button/buttonText';
+import { buttonText } from '../../components/button/ButtonText';
 import Button from '../../components/button/Button';
 import { useFocusEffect } from '@react-navigation/native';
 import { formLabels } from '../../forms/formLabels';

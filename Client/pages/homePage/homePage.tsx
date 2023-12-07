@@ -3,7 +3,7 @@ import {FlatList, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {styles} from './styles';
 import userList from '../../zustand/userListStore';
-import {buttonText} from '../../components/button/buttonText';
+import {buttonText} from '../../components/button/ButtonText';
 import Button from '../../components/button/Button';
 import {placeHolder} from '../../forms/placeHolder';
 

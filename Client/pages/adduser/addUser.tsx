@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, TextInput} from 'react-native';
 import {styles} from './styles';
 import useForm from '../../forms/addUser/useForm';
-import {buttonText} from '../../components/button/buttonText';
+import {buttonText} from '../../components/button/ButtonText';
 import Button from '../../components/button/Button';
 import {placeHolder} from '../../forms/placeHolder';
 
@@ -11,26 +11,29 @@ interface AddUserProps {
 }
 
 export default function AddUser({navigation}: AddUserProps) {
-
-  //useForm hooks 
+  //useForm hooks
   const {
     formValues,
     validationErrors,
     handleSubmit,
     handleFieldChange,
     handleHomePage,
+    isFormValid,
   } = useForm(navigation);
 
   return (
     <View>
+      {validationErrors.name && (
+        <Text style={styles.validationError}>{validationErrors.name}</Text>
+      )}
       <TextInput
         value={formValues.name}
         style={styles.input}
         placeholder={placeHolder.addUserPage.nameInput}
         onChangeText={text => handleFieldChange('name', text)}
       />
-      {validationErrors.name && (
-        <Text style={styles.validationError}>{validationErrors.name}</Text>
+      {validationErrors.age && (
+        <Text style={styles.validationError}>{validationErrors.age}</Text>
       )}
       <TextInput
         value={formValues.age}
@@ -39,8 +42,8 @@ export default function AddUser({navigation}: AddUserProps) {
         onChangeText={text => handleFieldChange('age', text)}
         keyboardType="numeric"
       />
-      {validationErrors.age && (
-        <Text style={styles.validationError}>{validationErrors.age}</Text>
+      {validationErrors.email && (
+        <Text style={styles.validationError}>{validationErrors.email}</Text>
       )}
       <TextInput
         value={formValues.email}
@@ -49,8 +52,8 @@ export default function AddUser({navigation}: AddUserProps) {
         onChangeText={text => handleFieldChange('email', text)}
         autoCapitalize="none"
       />
-      {validationErrors.email && (
-        <Text style={styles.validationError}>{validationErrors.email}</Text>
+      {validationErrors.salary && (
+        <Text style={styles.validationError}>{validationErrors.salary}</Text>
       )}
       <TextInput
         value={formValues.salary}
@@ -58,8 +61,10 @@ export default function AddUser({navigation}: AddUserProps) {
         placeholder={placeHolder.addUserPage.salaryInput}
         onChangeText={text => handleFieldChange('salary', text)}
       />
-      {validationErrors.salary && (
-        <Text style={styles.validationError}>{validationErrors.salary}</Text>
+      {validationErrors.description && (
+        <Text style={styles.validationError}>
+          {validationErrors.description}
+        </Text>
       )}
       <TextInput
         value={formValues.description}
@@ -67,15 +72,11 @@ export default function AddUser({navigation}: AddUserProps) {
         placeholder={placeHolder.addUserPage.descriptionInput}
         onChangeText={text => handleFieldChange('description', text)}
       />
-      {validationErrors.description && (
-        <Text style={styles.validationError}>
-          {validationErrors.description}
-        </Text>
-      )}
       <Button
-        style={styles.addEmployee}
+        style={isFormValid() ? styles.addEmployee : styles.addEmployeeDisabled}
         title={buttonText.addUserPage.addUser}
         onPress={handleSubmit}
+        disabled={!isFormValid()}
       />
       <Button
         style={styles.addEmployee}

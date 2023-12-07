@@ -7,9 +7,15 @@ export const styles = StyleSheet.create({
       margin: 20,
       borderRadius: 10,
       fontSize: 15,
+      padding: 10
     },
     addEmployee: {
       margin: 20,
+      backgroundColor: 'blue'
+    },
+    addEmployeeDisabled:{
+      margin: 20,
+      backgroundColor: 'grey'
     },
     validationError: {
       color: 'red',
