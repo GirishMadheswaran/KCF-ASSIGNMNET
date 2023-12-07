@@ -23,17 +23,14 @@ export default function AddUser({navigation}: AddUserProps) {
 
   return (
     <View>
-      {validationErrors.name && (
-        <Text style={styles.validationError}>{validationErrors.name}</Text>
-      )}
       <TextInput
         value={formValues.name}
         style={styles.input}
         placeholder={placeHolder.addUserPage.nameInput}
         onChangeText={text => handleFieldChange('name', text)}
       />
-      {validationErrors.age && (
-        <Text style={styles.validationError}>{validationErrors.age}</Text>
+       {validationErrors.name && (
+        <Text style={styles.validationError}>{validationErrors.name}</Text>
       )}
       <TextInput
         value={formValues.age}
@@ -42,8 +39,8 @@ export default function AddUser({navigation}: AddUserProps) {
         onChangeText={text => handleFieldChange('age', text)}
         keyboardType="numeric"
       />
-      {validationErrors.email && (
-        <Text style={styles.validationError}>{validationErrors.email}</Text>
+      {validationErrors.age && (
+        <Text style={styles.validationError}>{validationErrors.age}</Text>
       )}
       <TextInput
         value={formValues.email}
@@ -52,8 +49,8 @@ export default function AddUser({navigation}: AddUserProps) {
         onChangeText={text => handleFieldChange('email', text)}
         autoCapitalize="none"
       />
-      {validationErrors.salary && (
-        <Text style={styles.validationError}>{validationErrors.salary}</Text>
+      {validationErrors.email && (
+        <Text style={styles.validationError}>{validationErrors.email}</Text>
       )}
       <TextInput
         value={formValues.salary}
@@ -61,10 +58,8 @@ export default function AddUser({navigation}: AddUserProps) {
         placeholder={placeHolder.addUserPage.salaryInput}
         onChangeText={text => handleFieldChange('salary', text)}
       />
-      {validationErrors.description && (
-        <Text style={styles.validationError}>
-          {validationErrors.description}
-        </Text>
+      {validationErrors.salary && (
+        <Text style={styles.validationError}>{validationErrors.salary}</Text>
       )}
       <TextInput
         value={formValues.description}
@@ -72,6 +67,11 @@ export default function AddUser({navigation}: AddUserProps) {
         placeholder={placeHolder.addUserPage.descriptionInput}
         onChangeText={text => handleFieldChange('description', text)}
       />
+      {validationErrors.description && (
+        <Text style={styles.validationError}>
+          {validationErrors.description}
+        </Text>
+      )}
       <Button
         style={isFormValid() ? styles.addEmployee : styles.addEmployeeDisabled}
         title={buttonText.addUserPage.addUser}

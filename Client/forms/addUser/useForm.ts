@@ -3,7 +3,7 @@ import { FormValues } from './formValues';
 import { POST_USER_DETAILS } from '../../zustand/apiUrls';
 import { Alert } from 'react-native';
 
-const useForm = (navigation: any) => {
+const useFormHook = (navigation: any) => {
 
   const initialValues: FormValues = {
     name: '',
@@ -112,4 +112,4 @@ const useForm = (navigation: any) => {
   };
 };
 
-export default useForm;
+export default useFormHook;
