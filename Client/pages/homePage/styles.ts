@@ -10,7 +10,7 @@ export const styles = StyleSheet.create({
       marginTop: 5,
       marginBottom:10,
       padding: 20,
-      backgroundColor: 'pink',
+      backgroundColor: 'lightsteelblue',
       fontSize: 24,
       borderRadius: 10,
     },

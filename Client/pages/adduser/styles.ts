@@ -4,10 +4,12 @@ export const styles = StyleSheet.create({
     input: {
       borderColor: 'black',
       borderWidth: 1,
-      margin: 20,
+      margin: 1,
       borderRadius: 10,
       fontSize: 15,
-      padding: 10
+      padding: 10,
+      marginLeft: 20,
+      marginTop: 15
     },
     addEmployee: {
       margin: 20,

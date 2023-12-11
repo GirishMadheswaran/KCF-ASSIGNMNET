@@ -3,9 +3,8 @@ import {FlatList, Text, View, TextInput, TouchableOpacity} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
 import {styles} from './styles';
 import userList from '../../zustand/userListStore';
-import {buttonText} from '../../components/button/ButtonText';
 import Button from '../../components/button/Button';
-import {placeHolder} from '../../forms/placeHolder';
+import { langConst } from '../../constants/constants';
 
 interface HomePageProps {
   navigation: any;
@@ -35,12 +34,12 @@ export default function HomePage({navigation}: HomePageProps) {
   return (
     <View style={styles.mainContainer}>
       <TextInput
-        placeholder={placeHolder.homePage.searchInput}
+        placeholder={langConst.placeholders.searchInput}
         style={styles.inputBox}
         value={search}
         onChangeText={text => searchFilter(text)}
       />
-      <Button title={buttonText.homePage.addUser} onPress={handleAddUser} />
+      <Button title={langConst.buttons.addUser} onPress={handleAddUser} />
       <FlatList
         keyExtractor={item => item.id}
         data={filterData}

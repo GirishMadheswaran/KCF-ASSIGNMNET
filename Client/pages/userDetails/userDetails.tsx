@@ -2,10 +2,9 @@ import React, { useEffect } from 'react';
 import { ScrollView, Text, View, Image } from 'react-native';
 import { styles } from './styles';
 import GetUserDetailsStore from '../../zustand/getUserDetailsStore';
-import { buttonText } from '../../components/button/ButtonText';
 import Button from '../../components/button/Button';
 import { useFocusEffect } from '@react-navigation/native';
-import { formLabels } from '../../forms/formLabels';
+import { langConst } from '../../constants/constants';
 
 interface UserDetailsProps {
   route: {
@@ -47,31 +46,32 @@ export default function UserDetails({ route, navigation }: UserDetailsProps) {
         <Text>Loading</Text>
       ) : (
         <ScrollView>
+          <Button  
+            title={langConst.buttons.back}
+            onPress={handleHomePage}
+            style={styles.btn}
+          />
           <View style={styles.content}>
             {userData.image && (
               <Image source={{ uri: userData.image }} style={styles.img} />
             )}
             <Text>
-              <Text style={styles.boldText}>{formLabels.userDetailsPage.name}:</Text> {userData.name}
+              <Text style={styles.boldText}>{langConst.formlabels.name}:</Text> {userData.name}
             </Text>
             <Text>
-              <Text style={styles.boldText}>{formLabels.userDetailsPage.age}:</Text> {userData.age}
+              <Text style={styles.boldText}>{langConst.formlabels.age}:</Text> {userData.age}
             </Text>
             <Text>
-              <Text style={styles.boldText}>{formLabels.userDetailsPage.email}:</Text> {userData.email}
+              <Text style={styles.boldText}>{langConst.formlabels.email}:</Text> {userData.email}
             </Text>
             <Text>
-              <Text style={styles.boldText}>{formLabels.userDetailsPage.salary}:</Text> {userData.salary}
+              <Text style={styles.boldText}>{langConst.formlabels.salary}:</Text> {userData.salary}
             </Text>
             <Text>
-              <Text style={styles.boldText}>{formLabels.userDetailsPage.description}:</Text>
+              <Text style={styles.boldText}>{langConst.formlabels.description}:</Text>
               {userData.description}
             </Text>
           </View>
-          <Button  
-            title={buttonText.detailsPage.back}
-            onPress={handleHomePage}
-          />
         </ScrollView>
       )}
     </View>
